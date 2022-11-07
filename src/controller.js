@@ -11,7 +11,8 @@ module.exports = (req, res) => {
     const regex = /^\/(html|css|img|js)\/\w+\.(html|js|css|png|jpe?g|gif|tiff|bmp)$/;
     const match = endpoint.match(regex);
     if (match) {
-        utils.sendFile(res, match[0]);
+        utils.sendFile(res, "public" + match[0]);
+        return;
     }
 
     console.log(match);

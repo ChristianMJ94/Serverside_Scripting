@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 // 200 sendes tilbage ved undefined
 exports.sendText = (res, msg, status = 200) => {
     res.statusCode = status;
@@ -9,4 +11,16 @@ exports.sendJson = (res, msg, status = 200) => {
     res.statusCode = status;
     res.setHeader("Content-type", "application/json");
     res.end(JSON.stringify(msg));
+}
+
+exports.sendFile = (res, filename) => {
+    fs.readFile(filename, (err, filecontent) => {
+        if (err) {
+            exports.sendJson(res, {msg: "Filen findes ikke"}, 404);
+            return;
+        }
+        res.statusCode = 200;
+        res.setHeader("Content-type", "text/html");
+        res.end(filecontent);
+    })
 }
