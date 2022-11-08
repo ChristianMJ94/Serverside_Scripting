@@ -1,6 +1,8 @@
 const fs = require("fs");
 const mimetypes = require("./mimetypes.json");
 const path = require("path"); 
+const { resolve } = require("path");
+const { rejects } = require("assert");
 
 exports.sendText = (res, msg, status = 200) => {
     res.statusCode = status;
@@ -42,3 +44,19 @@ exports.redirect = (res, url) => {
     res.setHeader("Location", url);
     res.end();
 } 
+
+exports.getBody = (req) => {
+    let body = "";
+    return new Promise((resolve, reject) => {
+        req.on("data", (chunk) => {
+            body += chunk;
+        });
+        req.on("end", () => {
+            body = JSON.parse(body);
+            resolve(body);
+        });
+        req.on("error", () => {
+            reject("Fejl");
+        });
+    });
+}

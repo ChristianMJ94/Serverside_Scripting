@@ -15,7 +15,13 @@ module.exports = {
                 utils.sendJson(res, {msg: "Parameter not allowed here"}, 400);
                 return;
             }
-            utils.sendJson(res, {msg: "Test", method: req.method});
+            utils.getBody(req)
+                .then(body => {
+                    utils.sendJson(res, {msg: "Test", method: req.method, body});
+                })
+                .catch(err => {
+                    utils.sendJson(res, err, 500);
+                });
         }
     },
     PUT: {
