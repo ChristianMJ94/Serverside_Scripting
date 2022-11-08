@@ -5,6 +5,8 @@ const api = {
     "test" : require("./api/test")
 }
 
+console.log(api);
+
 module.exports = (req, res) => {
 
     utils.logger(req, res);
@@ -34,6 +36,17 @@ module.exports = (req, res) => {
     if (match) {
         // hvis jeg er her er der fundet et match til API'et
         console.log(match);
+        if (api[match.groups.route]) {
+            //hvis jeg er her er der fundet et endpoint
+            if (api[match.groups.route][req.method]) {
+                //hvis jeg er her er der en handler til method
+                api[match.groups.route][req.method].handler(req, res, match.groups.param);
+                return;
+            }
+            //hvis jeg er her er der ikke en handler
+            utils.sendJson(res, {msg: `Method ${req.method} not allowed`}, 405);
+            return;
+        }
     }
 
     //Hvis jeg er her er der ikke fundet et match
