@@ -1,5 +1,5 @@
 const fs = require("fs");
-const mimetypes = require("./minetypes.json");
+const mimetypes = require("./mimetypes.json");
 const path = require("path"); 
 
 // 200 sendes tilbage ved undefined
@@ -17,7 +17,7 @@ exports.sendJson = (res, msg, status = 200) => {
 
 exports.sendFile = (res, filename) => {
     const ext = path.extname(filename);
-    const mime = mimetypes(ext);
+    const mime = mimetypes[ext];
     fs.readFile(filename, (err, filecontent) => {
         if (err) {
             exports.sendJson(res, {msg: "Filen findes ikke"}, 404);
