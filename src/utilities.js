@@ -38,3 +38,10 @@ exports.logger = (req, res) => {
         console.log(logStr);
     })
 }
+
+//Redirect
+exports.redirect = (res, url) => {
+    res.statusCode = 308;
+    res.setHeader("Location", url);
+    res.end();
+} 

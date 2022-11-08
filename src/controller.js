@@ -8,6 +8,11 @@ module.exports = (req, res) => {
 
     const endpoint = incoming.pathname;
 
+    if (endpoint === "/") {
+        utils.redirect(res, "html/index.html");
+        return;
+    }
+
     //jex.im for rout diagram
     //regex101 for test
     const regex = /^\/(html|css|img|js)\/\w+\.(html|js|css|png|jpe?g|gif|tiff|bmp)$/;
@@ -15,12 +20,11 @@ module.exports = (req, res) => {
 
     const match = endpoint.match(regex);
     if (match) {
+        //Hvis jeg er her er der fundet et match
         utils.sendFile(res, "public" + match[0]);
         return;
     }
 
-    console.log(match);
-
-    //utils.sendText(res, "Hilsen fra serveren");
-    utils.sendJson(res, { "message": "Okay...."});
+    //Hvis jeg er her er der ikke fundet et match
+    utils.sendJson(res, { "message": `Resourcen '${endpoint}' findes ikke`}, 404);
 }
