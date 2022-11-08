@@ -1,28 +1,34 @@
+const config = require("./config/serverconfig.json");
 const utils = require("./utilities");
 
 module.exports = (req, res) => {
 
     utils.logger(req, res);
 
-    const incoming = new URL(req.url, "http://localhost:3003");
+    const incoming = new URL(req.url, `${config.host}:${config.port}`);
 
     const endpoint = incoming.pathname;
 
     if (endpoint === "/") {
-        utils.redirect(res, "html/index.html");
+        utils.redirect(res, config.default_doc);
         return;
     }
 
     //jex.im for rout diagram
     //regex101 for test
     const regex = /^\/(html|css|img|js)\/\w+\.(html|js|css|png|jpe?g|gif|tiff|bmp)$/;
-    //const rx = new RegExp("/^\\/(html|css|img|js)\\/\\w+\\.(html|js|css|png|jpe?g|gif|tiff|bmp)$/");
 
-    const match = endpoint.match(regex);
+    let match = endpoint.match(regex);
     if (match) {
         //Hvis jeg er her er der fundet et match
-        utils.sendFile(res, "public" + match[0]);
+        utils.sendFile(res, config.public_root + match[0]);
         return;
+    }
+
+    const regEx = /^\/api\/\w+$/;
+    match = endpoint.match(regEx);
+    if (match) {
+        // hvis jeg er her er der fundet et match til API'et
     }
 
     //Hvis jeg er her er der ikke fundet et match

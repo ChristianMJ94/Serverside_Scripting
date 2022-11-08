@@ -2,7 +2,6 @@ const fs = require("fs");
 const mimetypes = require("./mimetypes.json");
 const path = require("path"); 
 
-// 200 sendes tilbage ved undefined
 exports.sendText = (res, msg, status = 200) => {
     res.statusCode = status;
     res.setHeader("Content-type", "text/plain");
@@ -29,7 +28,6 @@ exports.sendFile = (res, filename) => {
     })
 }
 
-//Logger
 exports.logger = (req, res) => {
     let logStr = new Date().toISOString();
     logStr += ` ${req.method} ${req.url}`;
@@ -39,7 +37,6 @@ exports.logger = (req, res) => {
     })
 }
 
-//Redirect
 exports.redirect = (res, url) => {
     res.statusCode = 308;
     res.setHeader("Location", url);
