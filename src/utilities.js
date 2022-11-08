@@ -28,3 +28,13 @@ exports.sendFile = (res, filename) => {
         res.end(filecontent);
     })
 }
+
+//Logger
+exports.logger = (req, res) => {
+    let logStr = new Date().toISOString();
+    logStr += ` ${req.method} ${req.url}`;
+    res.on("finish", () => {
+        logStr += ` ${res.statusCode} ${res.statusMessage}`;
+        console.log(logStr);
+    })
+}
