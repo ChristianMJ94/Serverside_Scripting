@@ -1,6 +1,10 @@
 const config = require("./config/serverconfig.json");
 const utils = require("./utilities");
 
+const api = {
+    "test" : require("./api/test")
+}
+
 module.exports = (req, res) => {
 
     utils.logger(req, res);
@@ -25,10 +29,11 @@ module.exports = (req, res) => {
         return;
     }
 
-    const regEx = /^\/api\/\w+$/;
+    const regEx = /^\/api\/(?<route>\w+)(?<param>\/\d+)?$/;
     match = endpoint.match(regEx);
     if (match) {
         // hvis jeg er her er der fundet et match til API'et
+        console.log(match);
     }
 
     //Hvis jeg er her er der ikke fundet et match
