@@ -3,33 +3,73 @@ const config = require("../config/dbconfig.json");
 
 let pool;
 try {
-    pool = mysql.createPool(config);    
-} catch (error) {
-    console.log(error);
+    pool = mysql.createPool(config);
+}
+catch(err) {
+    console.log(err);
 }
 
 exports.getAll = () => {
-    return new Promise((success, failure) => {
+    return new Promise((succes, failure) => {
         const sql = "select * from tblapi order by fullname";
-        pool.execute(sql, (error, rows) => {
-            if (error) {
-                failure(error);
+        pool.execute(sql, (err, rows) => {
+            if(err) {
+                failure(err);
                 return;
             }
-            success(rows);
+            succes(rows);
         });
     });
 }
 
 exports.getById = id => {
-    return new Promise((success, failure) => {
+    return new Promise((succes, failure) => {
         const sql = "select * from tblapi where id = ? order by fullname";
-        pool.execute(sql, [id], (error, rows) => {
-            if (error) {
-                failure(error);
+        pool.execute(sql, [id], (err, rows) => {
+            if(err) {
+                failure(err);
                 return;
             }
-            success(rows);
+            succes(rows);
+        });
+    });
+}
+
+exports.insert = jsonData => {
+    return new Promise((succes, failure) => {
+        const sql = "insert into tblapi (fullname, email, student) values(?, ?, ?)";
+        pool.execute(sql, [jsonData.fullname, jsonData.email, jsonData.student], (err, result) => {
+            if(err) {
+                failure(err);
+                return;
+            }
+            succes(result);
+        });
+    });
+}
+
+exports.update = (id, jsonData) => {
+    return new Promise((succes, failure) => {
+        const sql = "update tblapi set fullname = ?, email = ?, student = ? where id = ?";
+        pool.execute(sql, [jsonData.fullname, jsonData.email, jsonData.student, id], (err, result) => {
+            if(err) {
+                failure(err);
+                return;
+            }
+            succes(result);
+        });
+    });
+}
+
+exports.delete = (id) => {
+    return new Promise((succes, failure) => {
+        const sql = "delete from tblapi where id = ?";
+        pool.execute(sql, [id], (err, result) => {
+            if(err){
+                failure(err);
+                return;
+            }
+            succes(result);
         });
     });
 }
