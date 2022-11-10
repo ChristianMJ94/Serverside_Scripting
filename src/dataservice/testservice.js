@@ -5,7 +5,6 @@ exports.getAll = () => {
         dbh.getAll()
         .then(data => {
             succes(data);
-            // console.log(data);
         })
         .catch( err => {
             console.log(err);
@@ -19,7 +18,6 @@ exports.getById = id => {
         dbh.getById(id)
         .then(data => {
             succes(data);
-            // console.log(data);
         })
         .catch( err => {
             console.log(err);

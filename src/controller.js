@@ -5,8 +5,6 @@ const api = {
     "test" : require("./api/test")
 }
 
-console.log(api);
-
 module.exports = (req, res) => {
 
     utils.logger(req, res);
@@ -35,7 +33,6 @@ module.exports = (req, res) => {
     match = endpoint.match(regEx);
     if (match) {
         // hvis jeg er her er der fundet et match til API'et
-        console.log(match);
         if (api[match.groups.route]) {
             //hvis jeg er her er der fundet et endpoint
             if (api[match.groups.route][req.method]) {

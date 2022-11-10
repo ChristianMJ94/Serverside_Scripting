@@ -30,7 +30,6 @@ module.exports = {
             if(param) {
                 utils.sendJson(res, {msg: "Parameter not allowed here"}, 400);
                 return;
-                // param = param.replace("/","");
             }
             utils.getBody(req)
                 .then( body => {

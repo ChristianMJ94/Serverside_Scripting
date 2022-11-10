@@ -32,9 +32,10 @@ exports.sendFile = (res, filename) => {
 
 exports.logger = (req, res) => {
     let logStr = new Date().toISOString();
+    let startTimer = process.hrtime.bigint();
     logStr += ` ${req.method} ${req.url}`;
     res.on("finish", () => {
-        logStr += ` ${res.statusCode} ${res.statusMessage}`;
+        logStr += ` ${res.statusCode} ${res.statusMessage} ${Number(process.hrtime.bigint() - startTimer) / 1000000 + "ms"}`;
         console.log(logStr);
     })
 }
@@ -52,8 +53,12 @@ exports.getBody = (req) => {
             body += chunk;
         });
         req.on("end", () => {
-            body = JSON.parse(body);
-            resolve(body);
+            try {
+                body = JSON.parse(body);
+                resolve(body);
+            } catch (error) {
+                reject(error);
+            }
         });
         req.on("error", () => {
             reject("Fejl");
