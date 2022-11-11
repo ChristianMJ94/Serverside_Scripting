@@ -1,6 +1,6 @@
 const config = require("./config/serverconfig.json");
 const utils = require("./utilities");
-const api = { "test" : require("./api/api") }
+const api = { "database" : require("./api/api") }
 
 module.exports = (req, res) => {
     utils.logger(req, res);

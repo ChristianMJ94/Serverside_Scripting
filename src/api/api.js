@@ -6,7 +6,6 @@ module.exports = {
         handler : (req, res, param) => {
             if(param) {
                 param = param.replace("/","");
-                
                 dataService.getById(param)
                 .then(data => {
                     utils.sendJson(res, {method: req.method, param: param, data});
