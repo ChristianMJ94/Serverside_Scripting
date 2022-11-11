@@ -11,7 +11,7 @@ catch(err) {
 
 exports.getAll = () => {
     return new Promise((succes, failure) => {
-        const sql = "select * from tblapi order by fullname";
+        const sql = "select gfd* from tblapi order by fullname";
         pool.execute(sql, (err, rows) => {
             if(err) {
                 failure(err);

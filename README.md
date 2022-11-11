@@ -5,6 +5,8 @@ API CRUD, MySql, XAMPP, Postman, VS Code
 MYSQL Query:
 create database if not exists apidatabase;
 
+status koder matcher ikke op
+
 use apidatabase;
 
 drop table if exists tblapi;
