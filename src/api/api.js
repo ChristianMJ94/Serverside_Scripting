@@ -1,5 +1,5 @@
 const utils = require("../utilities");
-const dataService = require("../dataservice/testservice");
+const dataService = require("../dataservice/dataservice");
 
 module.exports = {
     GET: {
@@ -9,19 +9,19 @@ module.exports = {
                 
                 dataService.getById(param)
                 .then(data => {
-                    utils.sendJson(res, {msg: "Test", method: req.method, param: param, data});
+                    utils.sendJson(res, {method: req.method, param: param, data});
                 })
                 .catch(err => {
-                    utils.sendJson(res, {msg: "Test", method: req.method, param: param, err: err.message});
+                    utils.sendJson(res, {method: req.method, param: param, err: err.message});
                 });
                 return;
             }
             dataService.getAll()
             .then(data => {
-                utils.sendJson(res, {msg: "Test", method: req.method, param: param, data});
+                utils.sendJson(res, {method: req.method, param: param, data});
             })
             .catch(err => {
-                utils.sendJson(res, {msg: "Test", method: req.method, err: err.message});
+                utils.sendJson(res, {method: req.method, err: err.message});
             });
         }
     },
@@ -35,10 +35,10 @@ module.exports = {
                 .then( body => {
                     dataService.insert(body)
                     .then(result => {
-                        utils.sendJson(res, {msg: "Test", method: req.method, result});
+                        utils.sendJson(res, {method: req.method, result});
                     })
                     .catch(err => {
-                        utils.sendJson(res, {msg: "Test", method: req.method, err: err.message});
+                        utils.sendJson(res, {method: req.method, err: err.message});
                     });
                 })
                 .catch( err => {
@@ -54,10 +54,10 @@ module.exports = {
                 .then(body => {
                     dataService.update(param, body)
                     .then(result => {
-                        utils.sendJson(res, {msg: "Test", method: req.method, param: param, body, result});
+                        utils.sendJson(res, {method: req.method, param: param, body, result});
                     })
                     .catch(err => {
-                        utils.sendJson(res, {msg: "Test", method: req.method, param: param, body, err: err.message});
+                        utils.sendJson(res, {method: req.method, param: param, body, err: err.message});
                     })
                 })
                 .catch(err => {
@@ -77,7 +77,7 @@ module.exports = {
             param = param.replace("/","");
             dataService.delete(param)
             .then(result => {
-                utils.sendJson(res, {msg: "Test", method: req.method, param, result});
+                utils.sendJson(res, {method: req.method, param, result});
             })
             .catch(err => {
                 utils.sendJson(res, {err: err.message}, 400);

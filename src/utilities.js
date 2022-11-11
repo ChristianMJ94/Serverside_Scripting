@@ -41,9 +41,6 @@ exports.logger = (req, res) => {
         if (err) {
             console.log("appendFile failed");
             }
-            else {
-                // done
-            }
         })
         console.log(logStr);
     })
