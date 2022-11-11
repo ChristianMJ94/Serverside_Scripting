@@ -31,11 +31,20 @@ exports.sendFile = (res, filename) => {
 }
 
 exports.logger = (req, res) => {
+    let fs = require('fs')
     let logStr = new Date().toISOString();
     let startTimer = process.hrtime.bigint();
     logStr += ` ${req.method} ${req.url}`;
     res.on("finish", () => {
         logStr += ` ${res.statusCode} ${res.statusMessage} ${Number(process.hrtime.bigint() - startTimer) / 1000000 + "ms"}`;
+        fs.appendFile('log.txt', logStr + "\n", function (err) {
+        if (err) {
+            console.log("appendFile failed");
+            }
+            else {
+                // done
+            }
+        })
         console.log(logStr);
     })
 }
