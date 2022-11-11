@@ -2,7 +2,7 @@ const config = require("./config/serverconfig.json");
 const utils = require("./utilities");
 
 const api = {
-    "test" : require("./api/test")
+    "test" : require("./api/api")
 }
 
 module.exports = (req, res) => {
